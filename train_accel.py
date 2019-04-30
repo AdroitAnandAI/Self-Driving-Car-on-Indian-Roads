@@ -59,7 +59,7 @@ for epoch in range(epochs):
   print("Model saved in file: %s" % filename_accel)
 
 
-### To predict the output based on the above trained model### - THE BUG IS IN THE CODE ABOVE!
+### To predict the output based on the above trained model###
 xs = []
 dataPath = "indian_dataset/"
 fileNamePrefix = "circuit2_x264.mp4 "
@@ -80,5 +80,46 @@ while(cv2.waitKey(10) != ord('q')):
     acceleration = model_accel.y_accel.eval(feed_dict={model_accel.x_accel: [image], model_accel.keep_prob_accel: 1.0, model_accel.keep_prob_accel_conv: 1.0}, session = sess_accel)[0][0]
     print(i,acceleration * 180.0 / scipy.pi)
     i += 1
+
+
+# To Visualize CNN Layers to better interpretability. Base code obtained from:
+# https://medium.com/@awjuliani/visualizing-neural-network-layer-activation-tensorflow-tutorial-d45f8bf7bbc4
+# def getActivations(layer,stimuli, filename, steer, acceleration):
+#     units = sess.run(layer,feed_dict={model.x:np.reshape(stimuli,[-1, 136, 240, 3],order='F'), model.y1_: np.reshape(steer, [-1, 1],order='F'), model.y2_: acceleration, model.keep_prob:1.0})
+#     plotNNFilter(units, filename)
+
+
+# def plotNNFilter(units, filename):
+#     filters = units.shape[3]
+#     plt.figure(1, figsize=(20,20))
+#     n_columns = 6
+#     n_rows = math.ceil(filters / n_columns) + 1
+#     for i in range(filters):
+#         plt.subplot(n_rows, n_columns, i+1)
+#         plt.title('Filter ' + str(i))
+#         plt.imshow(units[0,:,:,i], interpolation="nearest", cmap="gray")
+#     plt.savefig(filename)
+
+# xs = []
+# ys = []
+# accels = []
+# with open("indian_dataset/data.txt") as f:
+#     for line in f:
+#         xs.append("indian_dataset/circuit2_x264.mp4 " + str(line.split()[0]).zfill(5) + ".jpg")
+#         ys.append(float(line.split()[1]) * scipy.pi / 180)
+#         accels.append(float(line.split()[2]))
+
+# frameNum = 4805
+# full_image = scipy.misc.imread(xs[frameNum], mode="RGB")
+# image = scipy.misc.imresize(full_image[-150:], [136, 240]) / 255.0
+# cv2.imshow("Visualize CNN: input image", cv2.cvtColor(full_image, cv2.COLOR_RGB2BGR))
+# cv2.imshow("Visualize CNN: input image", image)
+
+# getActivations(model_steer.h_conv1,image, 'cnn-depict-conv1.jpg', ys[frameNum], accels[frameNum])
+# getActivations(model_steer.h_conv2,image, 'cnn-depict-conv2.jpg', ys[frameNum], accels[frameNum])
+# getActivations(model_steer.h_conv3,image, 'cnn-depict-conv3.jpg', ys[frameNum], accels[frameNum])
+# getActivations(model_steer.h_conv4,image, 'cnn-depict-conv4.jpg', ys[frameNum], accels[frameNum])
+# getActivations(model_steer.h_conv5,image, 'cnn-depict-conv5.jpg', ys[frameNum], accels[frameNum])
+# getActivations(model_steer.h_conv6,image, 'cnn-depict-conv6.jpg', ys[frameNum], accels[frameNum])
 
 sess_accel.close()
