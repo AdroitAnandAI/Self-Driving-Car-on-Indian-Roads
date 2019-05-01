@@ -12,6 +12,7 @@ https://medium.com/@AnandAI/self-driving-car-on-indian-roads-4e305cb04198
 ## Data Source/ Generate Training Data:
 
 First of all, record a driving video or obtain driving video from any source. I have contributed the indian driving dataset along with parameters in Kaggle. You can download it from here and unzip to project folder root.
+
 https://www.kaggle.com/ananduthaman/self-driving-car-on-indian-roads
 
 If you are recording your own driving video, then generate the training parameters, i.e. steering angle, acceleration, brake and gear using the console interface. This is a hack to generate training data, without tampering with the OBD interface of the car, which is a lot harder.
@@ -24,9 +25,9 @@ The interface program writes the steering angle, acceleration, brake and gear va
 
 ## Data Pre-Processing
 The self-recorded driving videos required some pre-processing steps before it could be fed to the network. Following softwares were used, in sequence:
-a) Lossless Cut - To cut out relevant video without loss.
-b) Anytime Video Converter - To resize video to reduce data.
-c) Video to JPG Converter - To extract frames from video.
+- Lossless Cut - To cut out relevant video without loss.
+- Anytime Video Converter - To resize video to reduce data.
+- Video to JPG Converter - To extract frames from video.
 
 ## Generate Optical Flow:
 
